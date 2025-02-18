@@ -42,6 +42,7 @@ import { deleteListingAction } from "@/action/deleteListingAction";
 import { myListingAction } from "@/action/myListingAction";
 import MyListingCard from "@/components/MyListingCard";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -52,25 +53,31 @@ export default function (){
     const [listing, setListing] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
-    useEffect(()=> {
-        if (status === "unauthenticated"){
-            router.push("/")
-        }
-    },[status])
+    if (status === "unauthenticated"){
+        router.push("/")
+        return null
+    }
 
     useEffect(() => {
+        if (status !== "authenticated" || !data?.user?.id) return;
+
         const fetchListings = async () => {
-            if (status === "authenticated" && data?.user?.id) {
-                const response = await myListingAction(data.user.id); // Call the function to get listings
+            try {
+                const response = await myListingAction(data.user.id);
                 if (response?.result) {
-                    setListing(response.result); // Set the listings
+                    setListing(response.result);
                 }
-                setLoading(false); // Hide loading spinner
+            } catch (error) {
+                console.error("Error fetching listings:", error);
+                alert("Failed to load listings. Please try again.");
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchListings();
-    }, [status, data]);
+    }, [status, data?.user?.id]);
+    
 
     const handleDelete = async (id: number) => {
         
@@ -85,10 +92,30 @@ export default function (){
             alert(response.error);
         }
     };
-    if (listing.length === 0){
-        return <div className="h-full flex items-center justify-center">
-            No Records Found
-        </div>
+
+    if (loading) {
+        return (
+            <div className="container mx-auto p-4 max-w-7xl">
+                <h1 className="text-2xl font-semibold mb-4">My Listings</h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {Array.from({ length: 16 }).map((_, index) => (
+                        <SkeletonCard key={index} />
+                    ))}
+                </div>
+            </div>
+        );
+    }
+    
+
+    if (!loading && listing.length === 0) {
+        return (
+            <div className="h-full flex flex-col items-center justify-center text-gray-500">
+                <p className="text-xl">No listings found.</p>
+                <Link href="/createlisting" className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">
+                    Create a Listing
+                </Link>
+            </div>
+        );
     }
 
     return (
@@ -113,4 +140,10 @@ export default function (){
             </div>
         </div>
     )
+}
+
+function SkeletonCard() {
+    return (
+        <div className="w-full h-64 bg-gray-200 animate-pulse rounded-lg"></div>
+    );
 }
