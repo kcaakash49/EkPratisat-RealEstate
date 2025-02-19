@@ -53,10 +53,12 @@ export default function (){
     const [listing, setListing] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
-    if (status === "unauthenticated"){
-        router.push("/")
-        return null
-    }
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/");
+        }
+    }, [status, router]);
+    
 
     useEffect(() => {
         if (status !== "authenticated" || !data?.user?.id) return;
