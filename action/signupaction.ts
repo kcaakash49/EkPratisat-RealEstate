@@ -15,5 +15,6 @@ import { Role } from "@prisma/client";
 // }
 
 export async function signupaction(formData: SignUpSchema) {
+    console.log(formData)
     return await signupservice(formData);
 }

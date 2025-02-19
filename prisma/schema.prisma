@@ -73,4 +73,5 @@ model TrashListings {
 enum Role{
   USER
   PARTNER
+  ADMIN
 }

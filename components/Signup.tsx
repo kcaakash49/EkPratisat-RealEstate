@@ -52,7 +52,7 @@ export function Signup() {
         setError(response.error);
       } else {
         setMessage(response.message || "");
-        router.push("/")
+        router.push("/auth/signin")
       }
     } catch (e) {
       setError({ error: "something happened" });
@@ -150,28 +150,34 @@ export function Signup() {
               >
                 <option value="USER">User</option>
                 <option value="PARTNER">Partner</option>
+                <option value="ADMIN">Admin</option>
               </select>
             </div>
 
             {/* Password */}
-            <div className="relative">
-              <input
-                type={isVisible ? "text" : "password"}
-                placeholder="Password"
-                className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                value={formData.password}
-                required
-                id="password"
-                name="password"
-                onChange={handleChange}
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-3 flex items-center"
-                onClick={() => setVisible(!isVisible)}
-              >
-                {isVisible ? "🙈" : "👁️"}
-              </button>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={isVisible ? "text" : "password"}
+                  placeholder="Password"
+                  className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  value={formData.password}
+                  required
+                  id="password"
+                  name="password"
+                  onChange={handleChange}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-3 flex items-center"
+                  onClick={() => setVisible(!isVisible)}
+                >
+                  {isVisible ? "🙈" : "👁️"}
+                </button>
+              </div>
             </div>
             {error?.password && <p className="text-red-500 text-sm text-center">{error.password}</p>}
 

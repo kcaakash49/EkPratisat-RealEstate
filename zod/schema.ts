@@ -49,7 +49,7 @@ export const signUpSchema = z.object({
     .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
     .regex(/[0-9]/, { message: "Password must contain at least one number." })
     .regex(/[\W_]/, { message: "Password must contain at least one special character." }),
-  role: z.enum(["USER", "PARTNER"]),
+  role: z.enum(["USER", "PARTNER", "ADMIN"]),
 });
 
 export type SignUpSchema = z.infer<typeof signUpSchema>;
