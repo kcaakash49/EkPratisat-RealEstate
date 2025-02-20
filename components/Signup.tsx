@@ -52,7 +52,7 @@ export function Signup() {
         setError(response.error);
       } else {
         setMessage(response.message || "");
-        router.push("/auth/signin")
+        router.push("/")
       }
     } catch (e) {
       setError({ error: "something happened" });
