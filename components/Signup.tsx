@@ -136,7 +136,7 @@ export function Signup() {
             </div>
 
             {/* Role */}
-            <div>
+            {/* <div>
               <label htmlFor="role" className="block text-sm font-medium text-gray-700">
                 Role
               </label>
@@ -152,7 +152,7 @@ export function Signup() {
                 <option value="PARTNER">Partner</option>
                 <option value="ADMIN">Admin</option>
               </select>
-            </div>
+            </div> */}
 
             {/* Password */}
             <div>
