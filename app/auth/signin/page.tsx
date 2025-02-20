@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
@@ -31,7 +31,15 @@ export default function SignIn() {
       setError("Wrong username or password")
       return
     }
-    router.push("/")
+    // const session = await fetch("/api/auth/session").then((res) => res.json());
+    const session = await getSession();
+    console.log(session)
+
+    if(session?.user?.role === "ADMIN"){
+      router.push("/admin")
+    }else {
+      router.push("/")
+    }
 
   };
 
