@@ -17,7 +17,7 @@ export default function HeroSection() {
           muted
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/video/scene.mp4" type="video/mp4" />
+          <source src="/video/bg.webm" type="video/mp4" />
           {/* Add fallback content in case video can't be loaded */}
           Your browser does not support the video tag.
         </video>
@@ -25,7 +25,7 @@ export default function HeroSection() {
       
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/50"></div>
+      {/* <div className="absolute inset-0 bg-black/50"></div> */}
 
       {/* Content Wrapper */}
       <div className="relative z-10 flex flex-col min-h-[clamp(60vh,80vw,90vh)]">

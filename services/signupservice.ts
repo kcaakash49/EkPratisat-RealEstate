@@ -21,6 +21,8 @@ export async function signupservice(formData: SignUpSchema) {
             );
             return {
                 error: simplifiedErrors,
+                status: 400
+               
             };
         }
         const existingUser = await client.user.findFirst({
@@ -34,14 +36,18 @@ export async function signupservice(formData: SignUpSchema) {
                 return {
                     error: {
                         error: "Phone Number is already taken. Please choose another one.",
+                        
                     },
+                    status : 403
                 };
             }
             if (existingUser.email === formData.email) {
                 return {
                     error: {
                         error: "Email is already registered. Please use another email.",
+                        
                     },
+                    status: 403
                 };
             }
         }
@@ -51,13 +57,14 @@ export async function signupservice(formData: SignUpSchema) {
             data: formData,
         });
 
-        return { message: "Signup successful" };
+        return { message: "Signup successful",status: 200 };
     } catch (error) {
         // console.error("Error during signup:", error);
 
         // Return a generic error if something unexpected happens
         return {
             error: { error: "An unexpected error occurred. Please try again later." },
+            status: 500
         };
     }
 }

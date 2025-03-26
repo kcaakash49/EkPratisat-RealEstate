@@ -14,8 +14,11 @@ interface ResponseType {
     fullname?: string,
     email?: string,
     mobile?: string,
-    password?: string
-  }
+    password?: string,
+    error?: string
+    
+  },
+  status: number
 }
 
 export function Signup() {

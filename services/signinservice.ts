@@ -21,6 +21,8 @@ export async function signinservice(mobile: string, password: string){
             user: user
         }
     }catch(e){
-        return e
+        return {
+            error: `Something Happened ${e}`
+        }
     }
 }
