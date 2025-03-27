@@ -22,6 +22,8 @@ model User{
   password String
   listings Listings[]
   created  DateTime  @default(now())
+  favourites Favourites[]
+
 }
 
 model Listings{
@@ -41,7 +43,12 @@ model Listings{
   user User @relation(fields: [userId], references: [id])
   userId Int
   images Image[]
+  longitude String? 
+  latitude  String?
+  verified Boolean  @default(false)
   created  DateTime  @default(now())
+  favourites Favourites[]
+  amenities String[]
 }
 
 model Image {
@@ -68,6 +75,17 @@ model TrashListings {
   userId Int
   images String[]
   created  DateTime
+}
+
+model Favourites {
+  id Int @id @default(autoincrement()) @unique
+  user User @relation(fields:[userId], references:[id])
+  userId Int
+  listing Listings @relation(fields:[listingId], references:[id])
+  listingId Int
+  created DateTime @default(now())
+
+  @@unique([userId, listingId])
 }
 
 enum Role{
