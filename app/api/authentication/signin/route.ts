@@ -2,66 +2,13 @@
 
 import { signinservice } from "@/services/signinservice";
 import { generateUserToken } from "@/utils/jwtToken";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
-// Adjust the path based on where your signinservice is
-
-// export  async function POST(req: NextApiRequest, res: NextApiResponse) {
-//     if (req.method === "POST") {
-//         const { mobile, password } = req.body;
-
-//         if (!mobile || !password) {
-//             return res.status(400).json({ error: "Mobile and password are required" });
-//         }
-
-//         try {
-//             const result = await signinservice(mobile, password);
-
-//             if (result.error) {
-//                 return res.status(400).json(result); // Returning error message
-//             }
-
-//             return res.status(200).json(result); // Returning success message and user data
-//         } catch (e) {
-//             return res.status(500).json({ error: "Internal Server Error" });
-//         }
-//     } else {
-//         // Handle any other HTTP method
-//         res.setHeader("Allow", ["POST"]);
-//         return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
-//     }
-// }
-
-// export async function POST (req: NextRequest, res: NextResponse) {
-
-//     const  {mobile, password} = await req.body;
-
-//     if(!mobile || !password){
-//         return res.status(200).json({
-//             error: "Mobile and Password are required"
-//         })
-//     }
-
-//     try {
-//         const result = await signinservice(mobile,password);
-
-//         if (result.error){
-//             return res.status(400).json(result)
-//         }
-
-//         return res.status(200).json(result);
-//     } catch(e){
-//         return res.status(500).json({
-//             error: "Internal Server Error"
-//         })
-//     }
-
-// }
 
 export async function POST(req: NextRequest) {
   try {
     const { mobile, password } = await req.json();
+    console.log(mobile,password);
 
     if (!mobile || !password) {
       return NextResponse.json(
@@ -75,7 +22,7 @@ export async function POST(req: NextRequest) {
     const result = await signinservice(mobile, password);
 
     if (result.error) {
-      return NextResponse.json(result, { status: 400 });
+      return NextResponse.json(result, { status: result.status });
     }
 
     if(result.user){
@@ -83,8 +30,9 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(
           {
             token: token,
+            user: result.user
           },
-          { status: 200 }
+          { status: result.status }
         );
 
     }

@@ -49,6 +49,7 @@ model Listings{
   created  DateTime  @default(now())
   favourites Favourites[]
   amenities String[]
+  
 }
 
 model Image {

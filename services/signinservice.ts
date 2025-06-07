@@ -12,17 +12,20 @@ export async function signinservice(mobile: string, password: string){
         
         if (!user){
             return{
-                error: "Wrong username or password"
+                error: "Wrong username or password",
+                status: 400
             }
         }
         
         return{
             message: "Login Success",
-            user: user
+            user: user,
+            status:200
         }
     }catch(e){
         return {
-            error: `Something Happened ${e}`
+            error: `Something Happened ${e}`,
+            status:500
         }
     }
 }

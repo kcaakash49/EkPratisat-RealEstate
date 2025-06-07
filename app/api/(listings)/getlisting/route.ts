@@ -18,7 +18,7 @@ export async function GET() {
     return res;  // Return the response
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch listings" },
+      { error: "Failed to fetch listings!" },
       { status: 500 }  // Set the status here
     );
   }
